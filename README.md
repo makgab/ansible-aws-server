@@ -1,4 +1,4 @@
-## Deploying AWS Linux szervers with Ansible
+## Deploying AWS Linux servers with Ansible
 --------------------------------------------
 
 - Requires Ansible 1.x
