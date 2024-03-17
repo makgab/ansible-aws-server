@@ -44,19 +44,20 @@ These modules are designed to be idempotent when possible, so that they only mak
 
 
 Using:
- - https://medium.com/@elcymarion_her/setting-up-ansible-the-easier-way-and-ssh-into-aws-ec2-7c7ed2766ed6
- - ansible hosts_to_add_key -m ping -i ansible_hosts --user ubuntu -key-file ~/key/privatekey.pem
- - ansible-playbook playbook.yml -i ansible_hosts --user ubuntu --key-file ~/keys/private.pem -e "key=~/.ssh/id_rsa.pub"
+- https://medium.com/@elcymarion_her/setting-up-ansible-the-easier-way-and-ssh-into-aws-ec2-7c7ed2766ed6
+- ansible hosts_to_add_key -m ping -i ansible_hosts --user ubuntu -key-file ~/key/privatekey.pem
+- ansible-playbook playbook.yml -i ansible_hosts --user ubuntu --key-file ~/keys/private.pem -e "key=~/.ssh/id_rsa.pub"
 
 
 ### Using
 ---------
 
- - Put the password (mkpasswd) into the file of 'group_vars/all'
- - Put the IP address of your server into the file of 'hosts'
- - Play the ansible using AWS server witj ssh key files:
+- Put the password (mkpasswd) into the file of 'group_vars/all'
+- Put the IP address of your server into the file of 'hosts'
+- Play the ansible using AWS server witj ssh key files:
 
-   ~# ansible hosts_to_add_key -m ping -i hosts --user fedora --key-file ~/key/aws-keypair.pem
-   ~# ansible-playbook playbook.yml -i hosts --user fedora --key-file ~/keys/aws-keypair.pem -e "key=~/.ssh/id_rsa.pub"
+-  ~# ansible hosts_to_add_key -m ping -i hosts --user fedora --key-file ~/key/aws-keypair.pem
+-  ~# ansible-playbook playbook.yml -i hosts --user fedora --key-file ~/keys/aws-keypair.pem -e "key=~/.ssh/id_rsa.pub"
+
 
 :)
