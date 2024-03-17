@@ -1,0 +1,104 @@
+---
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/posix/selinux_module.html
+- name: "Disable SELinux"
+  ansible.posix.selinux:
+    state: disabled
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/hostname_module.html
+- name: "Set the hostname"
+  ansible.builtin.hostname:
+    name: anonymous-01
+    use: systemd
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html#ansible-collections-ansible-builtin-user-module
+- name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+  ansible.builtin.user:
+    name: johnd
+    password: '{{ user_password }}'
+    comment: John Doe
+    uid: 1002
+    group: wheel
+
+- name: pause
+  pause: seconds=15
+
+- name: "DNF Update"
+  dnf:
+    name: "*"
+    state: latest
+
+- name: "Install the latest version of GIT"
+  dnf:
+    name: git
+    state: latest
+
+- name: "Install the latest version of some network packages"
+  dnf:
+    name: ['net-tools', 'iptraf-ng', 'nmap', 'openssh-server', 'firewalld' ]
+    state: latest
+
+- name: "Install Apache web server (httpd) packages"
+  dnf:
+    name: [ 'httpd', 'php', 'mod_ssl' ]
+    state: latest
+
+- name: "Adding index.html file"
+  copy:
+    src: ../files/index.html
+    dest: /var/www/html/index.html
+    owner: apache
+    group: apache
+    mode: '0644'
+
+- name: "OpenSSL packages install"
+  dnf:
+    name: [ 'openssl', 'python3', 'python3-cryptography' ]
+    state: latest
+
+# Generate a Self Signed OpenSSL certificate:
+# https://linuxconfig.org/how-to-install-mod-ssl-on-redhat-8
+#
+# sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/localhost.key -out ~/localhost.crt
+#
+# Data: Country Name, Locality Name (eg, city), Organization Name (eg, company), Common Name (eg, your name or your server's hostname)
+#
+
+
+#
+# Install:
+# ansible-galaxy collection install ansible.posix
+#
+- name: "Firewalld: permit traffic in default zone for https service"
+  ansible.posix.firewalld:
+    service: https
+    permanent: yes
+    state: enabled
+
+- name: "Firewalld: permit traffic in default zone for http service"
+  ansible.posix.firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+
+#
+# SERVICES
+#
+# bug?  cannot get service state
+- name: "Apache service httpd enabled and start"
+  systemd:
+    name: httpd
+    enabled: yes
+    state: started
+    # masked: no
+#
+# ckeched it: ansible -m shell -a 'systemctl status httpd' all
+#
+
+# bug?  cannot get service state
+- name: "Firewalld service enabled and start"
+  systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+    # masked: no

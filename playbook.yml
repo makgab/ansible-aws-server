@@ -1,0 +1,15 @@
+#
+# ansible hosts_to_add_key -m ping -i hosts --user fedora --key-file ~/key/aws-2024-linux.pem
+#
+# (ansible-playbook -K playbook.yml)
+# ansible-playbook playbook.yml -i hosts --user fedora --key-file ~/keys/aws-2024-linux.pem -e "key=~/.ssh/id_rsa.pub"
+#
+
+
+---
+
+- name: Fedora Playbook
+  hosts: all
+  become: true
+  roles:
+  - basic
