@@ -54,7 +54,7 @@ Using:
 
 - Put the password (mkpasswd) into the file of 'group_vars/all'
 - Put the IP address of your server into the file of 'hosts'
-- Play the ansible using AWS server witj ssh key files:
+- Play the ansible using AWS server with ssh key files:
 
 -  ~# ansible hosts_to_add_key -m ping -i hosts --user fedora --key-file ~/key/aws-keypair.pem
 -  ~# ansible-playbook playbook.yml -i hosts --user fedora --key-file ~/keys/aws-keypair.pem -e "key=~/.ssh/id_rsa.pub"
